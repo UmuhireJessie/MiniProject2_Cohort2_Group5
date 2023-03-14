@@ -26,13 +26,14 @@ To run the project there is a need to have flutter, dart, and Visual Studio Code
 1. Clone the project 
 
 ``` bash
-git clone https://github.com/UmuhireJessie/MiniProject2_Cohort2_Group5.git
+git clone https://github.com/UmuhireJessie/miniproject2_cohort2_group5.git
+
 ```
 
 2. Open the project with vs code
 
 ``` bash
-cd MiniProject2_Cohort2_Group5
+cd miniproject2_cohort2_group5
 code .
 ```
 
