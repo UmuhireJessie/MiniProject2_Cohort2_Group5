@@ -1,11 +1,11 @@
 import 'package:miniproject/Ticket.dart';
-
 import 'Creditcard.dart';
 import 'package:flutter/material.dart';
 import 'Signin.dart';
 import 'Signup.dart';
 import 'Splash.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 
 void main() => runApp(MyApp());
 
@@ -169,18 +169,21 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         SizedBox(height: 10),
                         Center(
-                          child: Column(children: [
-                            Text(
-                              "Your Best Online Bus Ticketing System ",
-                              style:
-                                  TextStyle(fontSize: 13, fontFamily: 'Bungee'),
-                            ),
-                            Text(
-                              "in Rwanda",
-                              style:
-                                  TextStyle(fontSize: 13, fontFamily: 'Bungee'),
-                            ),
-                          ]),
+                          child: AnimatedTextKit(
+                            animatedTexts: [
+                              RotateAnimatedText(
+                                "Your Best Online Bus Ticketing System ",
+                                textStyle: TextStyle(
+                                    fontSize: 16, fontFamily: 'Bungee'),
+                              ),
+                              RotateAnimatedText(
+                                "in Rwanda",
+                                textStyle: TextStyle(
+                                    fontSize: 16, fontFamily: 'Bungee'),
+                              ),
+                            ],
+                            repeatForever: true,
+                          ),
                         ),
                       ],
                     ))
