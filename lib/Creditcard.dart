@@ -1,4 +1,6 @@
+import 'alltickets.dart';
 import 'main.dart';
+import 'details.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'Ticket.dart';
@@ -10,12 +12,12 @@ class CreditCardPage extends StatefulWidget {
 }
 
 class _CreditCardPageState extends State<CreditCardPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   List<Widget> _pages = [
     MyHomePage(),
-    TicketPage(),
-    CreditCardPage(),
+    DetailsPage(),
+    Mytickets(),
   ];
 
   void _onItemTapped(int index) {
@@ -36,35 +38,6 @@ class _CreditCardPageState extends State<CreditCardPage> {
           color: Color(0xFFF4F4F4),
           child: Column(
             children: [
-              // Top bar with time and icons
-              Container(
-                height: 50,
-                padding: EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      DateTime.now().hour.toString() +
-                          ":" +
-                          DateTime.now().minute.toString() +
-                          "  " +
-                          "MTN",
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.wifi),
-                        SizedBox(width: 8),
-                        Icon(FontAwesomeIcons.signal, size: 17),
-                        SizedBox(width: 8),
-                        Icon(FontAwesomeIcons.batteryThreeQuarters),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
               Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

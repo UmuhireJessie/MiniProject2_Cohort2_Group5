@@ -1,20 +1,33 @@
-import 'package:miniproject/Ticket.dart';
-
-import 'Creditcard.dart';
+import 'alltickets.dart';
+import 'buyTicket.dart';
+import 'details.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'Signin.dart';
 import 'Signup.dart';
 import 'Splash.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-void main() => runApp(MyApp());
+
+
+// void main() => runApp(MyApp());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
+}
+
+final navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Application name
+      navigatorKey: navigatorKey,
       title: 'B-Ticket App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -42,8 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Widget> _pages = [
     MyHomePage(),
-    TicketPage(),
-    CreditCardPage(),
+    DetailsPage(),
+    Mytickets(),
   ];
 
   void _onItemTapped(int index) {
@@ -58,6 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser?.email;
+
     return Scaffold(
       key: _scaffoldKey,
       drawer: Drawer(
@@ -69,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 accountName: Container(
                   margin: EdgeInsets.only(left: 14.0),
                   child: Text(
-                    "Name",
+                    user != null ? user! : "User email",
                     style: TextStyle(
                         fontSize: 16,
                         fontFamily: 'DM Sans',
@@ -110,6 +125,28 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 iconColor: Color(0xff707378),
               ),
+              if (user != null)
+                GestureDetector(
+                  onTap: () {
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pop(context);
+                  },
+                  child: ListTile(
+                    leading: Icon(Icons.logout_rounded, size: 25),
+                    onTap: () {
+                      FirebaseAuth.instance.signOut();
+                      Navigator.pop(context);
+                    },
+                    title: Text(
+                      'Sign out',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontFamily: 'DM Sans',
+                          color: Color(0xff707378)),
+                    ),
+                    iconColor: Color(0xff707378),
+                  ),
+                ),
             ],
           ),
         ),
@@ -169,48 +206,27 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         SizedBox(height: 10),
                         Center(
-                          child: Column(children: [
-                            Text(
-                              "Your Best Online Bus Ticketing System ",
-                              style:
-                                  TextStyle(fontSize: 13, fontFamily: 'Bungee'),
-                            ),
-                            Text(
-                              "in Rwanda",
-                              style:
-                                  TextStyle(fontSize: 13, fontFamily: 'Bungee'),
-                            ),
-                          ]),
+                          child: AnimatedTextKit(
+                            animatedTexts: [
+                              RotateAnimatedText(
+                                "Your Best Online Bus Ticketing System ",
+                                textStyle: TextStyle(
+                                    fontSize: 16, fontFamily: 'Bungee'),
+                              ),
+                              RotateAnimatedText(
+                                "in Rwanda",
+                                textStyle: TextStyle(
+                                    fontSize: 16, fontFamily: 'Bungee'),
+                              ),
+                            ],
+                            repeatForever: true,
+                          ),
                         ),
                       ],
                     ))
                   ]),
                 ),
 
-                // Top bar with time and icons
-                Container(
-                  height: 50,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '11:30 PM MTN',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.wifi),
-                          SizedBox(width: 8),
-                          Icon(FontAwesomeIcons.signal, size: 17),
-                          SizedBox(width: 8),
-                          Icon(FontAwesomeIcons.batteryThreeQuarters),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
               ]),
               SizedBox(height: 60),
               Column(

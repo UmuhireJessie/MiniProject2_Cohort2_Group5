@@ -26,32 +26,7 @@ class _SplashState extends State<Splash> {
             color: Color(0xFFF4F4F4),
             child: Column(
               children: [
-                // Top bar with time and icons
-                Container(
-                  height: 50,
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '11:30 PM MTN',
-                        style: TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.bold),
-                      ),
-                      Row(
-                        children: [
-                          Icon(Icons.wifi),
-                          SizedBox(width: 8),
-                          Icon(FontAwesomeIcons.signal, size: 17),
-                          SizedBox(width: 8),
-                          Icon(FontAwesomeIcons.batteryThreeQuarters),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
                 SizedBox(height: 200),
-                // Center(child: Image.asset("assets/images/bticket.jpeg")),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.asset(

@@ -1,9 +1,9 @@
-import 'Creditcard.dart';
+import 'details.dart';
 import 'package:miniproject/main.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'Splash.dart';
+import 'allTickets.dart';
 
 class TicketPage extends StatefulWidget {
   @override
@@ -11,12 +11,12 @@ class TicketPage extends StatefulWidget {
 }
 
 class _TicketPageState extends State<TicketPage> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   List<Widget> _pages = [
-    MyHomePage(),
-    TicketPage(),
-    CreditCardPage(),
+   MyHomePage(),
+    DetailsPage(),
+    Mytickets(),
   ];
 
   void _onItemTapped(int index) {
@@ -34,33 +34,6 @@ class _TicketPageState extends State<TicketPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(children: [
-          // Top bar with time and icons
-          Container(
-            height: 50,
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  DateTime.now().hour.toString() +
-                      ":" +
-                      DateTime.now().minute.toString() +
-                      "  " +
-                      "MTN",
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-                Row(
-                  children: [
-                    Icon(Icons.wifi),
-                    SizedBox(width: 8),
-                    Icon(FontAwesomeIcons.signal, size: 17),
-                    SizedBox(width: 8),
-                    Icon(FontAwesomeIcons.batteryThreeQuarters),
-                  ],
-                ),
-              ],
-            ),
-          ),
           Container(
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
