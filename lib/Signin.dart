@@ -1,6 +1,7 @@
 import 'package:miniproject/main.dart';
 
 import 'Signup.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -11,6 +12,16 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
   bool _obscureText = true;
+  final emailContoller = TextEditingController();
+  final passwordContoller = TextEditingController();
+
+  @override
+  void dispose() {
+    emailContoller.dispose();
+    passwordContoller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,104 +81,127 @@ class _SignInPageState extends State<SignInPage> {
               ],
             ),
 
-            SizedBox(height: 40),
+            Expanded(child: SizedBox(height: 1)),
 
             // Sign in form
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'Enter Your Email',
-                    style: TextStyle(fontSize: 14, fontFamily: 'DM Sans'),
-                  ),
-                  SizedBox(height: 15),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                          color: Color.fromRGBO(255, 77, 1, 0.53), width: 2),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 8.0),
-                      child: TextField(
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
+            StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Something went wrong!'));
+                } else if (snapshot.hasData) {
+                  Future.delayed(Duration(seconds: 2), () {
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => MyHomePage()));
+                  });
+                  return Center(child: Text('Successfully logged in!'));
+                } else {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 24),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'Enter Your Email',
+                          style: TextStyle(fontSize: 14, fontFamily: 'DM Sans'),
                         ),
-                        cursorColor: Color(0xff2c1602),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Enter Your Password',
-                    style: TextStyle(fontSize: 14, fontFamily: 'DM Sans'),
-                  ),
-                  SizedBox(height: 15),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                          color: Color.fromRGBO(255, 77, 1, 0.53), width: 2),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 8.0, top: 8.0, right: 8.0),
-                      child: Stack(
-                        children: [
-                          TextField(
-                            obscureText: _obscureText,
-                            decoration: InputDecoration(
-                              border: InputBorder.none,
-                            ),
-                            cursorColor: Color(0xff2c1602),
+                        SizedBox(height: 15),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                                color: Color.fromRGBO(255, 77, 1, 0.53),
+                                width: 2),
+                            color: Colors.white,
                           ),
-                          Positioned(
-                            right: 0,
-                            child: IconButton(
-                              icon: _obscureText
-                                  ? Icon(Icons.visibility_off)
-                                  : Icon(Icons.visibility),
-                              onPressed: () {
-                                setState(() {
-                                  _obscureText = !_obscureText;
-                                });
-                              },
+                          child: Padding(
+                            padding: EdgeInsets.only(left: 8.0),
+                            child: TextField(
+                              controller: emailContoller,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                              ),
+                              cursorColor: Color(0xff2c1602),
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text(
-                      'Sign In',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'DM Sans Med',
-                          color: Color(0xff000000)),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                        Color.fromRGBO(255, 77, 1, 0.53),
-                      ),
-                      elevation: MaterialStateProperty.all<double>(0),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.88),
                         ),
-                      ),
+                        SizedBox(height: 20),
+                        Text(
+                          'Enter Your Password',
+                          style: TextStyle(fontSize: 14, fontFamily: 'DM Sans'),
+                        ),
+                        SizedBox(height: 15),
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(
+                                color: Color.fromRGBO(255, 77, 1, 0.53),
+                                width: 2),
+                            color: Colors.white,
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                left: 8.0, top: 8.0, right: 8.0),
+                            child: Stack(
+                              children: [
+                                TextField(
+                                  controller: passwordContoller,
+                                  textInputAction: TextInputAction.done,
+                                  obscureText: _obscureText,
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                  ),
+                                  cursorColor: Color(0xff2c1602),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  child: IconButton(
+                                    icon: _obscureText
+                                        ? Icon(Icons.visibility_off)
+                                        : Icon(Icons.visibility),
+                                    onPressed: () {
+                                      setState(() {
+                                        _obscureText = !_obscureText;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 30),
+                        ElevatedButton(
+                          onPressed: signIn,
+                          child: Text(
+                            'Sign In',
+                            style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'DM Sans Med',
+                                color: Color(0xff000000)),
+                          ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              Color.fromRGBO(255, 77, 1, 0.53),
+                            ),
+                            elevation: MaterialStateProperty.all<double>(0),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.88),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ],
-              ),
+                  );
+                }
+              },
             ),
-
-            SizedBox(height: 20),
 
             Center(
                 child: Row(
@@ -199,9 +233,33 @@ class _SignInPageState extends State<SignInPage> {
                 ),
               ],
             )),
+            Expanded(child: SizedBox(height: 10)),
           ],
         ),
       ),
     );
+  }
+
+  Future signIn() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailContoller.text.trim(),
+          password: passwordContoller.text.trim()).then((value) => 
+            Future.delayed(Duration(seconds: 2), () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => MyHomePage()));
+                    })
+          );
+    } on FirebaseAuthException catch (e) {
+      Center(child: Text("Signin Failed, Please Try again"));
+    }
+
+    navigatorKey.currentState!.popUntil((route) => route.isFirst);
   }
 }
