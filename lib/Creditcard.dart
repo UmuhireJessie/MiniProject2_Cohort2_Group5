@@ -150,7 +150,8 @@ class _CreditCardPageState extends State<CreditCardPage> {
                           ],
                         ),
                         SizedBox(height: 33),
-                        Center(
+                        Container(
+                          width: MediaQuery.of(context).size.width,
                           child: SizedBox(
                             width: 296,
                             height: 42,

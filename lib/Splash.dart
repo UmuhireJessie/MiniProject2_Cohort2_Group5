@@ -26,8 +26,9 @@ class _SplashState extends State<Splash> {
             color: Color(0xFFF4F4F4),
             child: Column(
               children: [
-                SizedBox(height: 200),
-                ClipRRect(
+                SizedBox(height: 250),
+                Center(
+                    child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.0),
                   child: Image.asset(
                     'assets/images/bticket.jpeg',
@@ -35,7 +36,7 @@ class _SplashState extends State<Splash> {
                     height: 120,
                     fit: BoxFit.cover,
                   ),
-                )
+                )),
               ],
             )));
   }
