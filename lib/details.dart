@@ -29,6 +29,75 @@ class _DetailsPageState extends State<DetailsPage> {
     );
   }
 
+  List<String> locations = [
+    'Rubavu',
+    'Musanze',
+    'Nyanza',
+    'Karongi',
+    'Kamonyi',
+    'Rusizi',
+    'Ngororero',
+    'Nyabihu',
+    'Kayonza'
+  ];
+  String selectedLocation = 'Rubavu';
+
+  List<String> departTime = [
+    '5:00am',
+    '5:30am',
+    '6:00am',
+    '6:30am',
+    '7:00am',
+    '7:30am',
+    '8:00am',
+    '8:30am',
+    '9:00am',
+    '9:30am',
+    '10:00am',
+    '10:30',
+    '11:00am',
+    '11:30',
+    '12:00am',
+    '12:30am',
+    '13:00pm',
+    '13:30pm',
+    '14:00pm',
+    '14:30pm',
+    '15:00pm',
+    '15:30pm',
+    '16:00pm',
+    '16:30pm',
+    '17:00pm',
+    '17:30pm',
+    '18:00pm',
+    '18:30pm',
+    '19:00pm'
+  ];
+  String selectedTime = '5:00am';
+
+  List<String> Agencies = [
+    'RITCO',
+    'KIVUBELT',
+    'JAGUAR',
+    'CAPITAL',
+    'VIRUNGA',
+    'EXPRESS'
+  ];
+  String ChosenAgencies = 'VIRUNGA';
+
+   List<String> ArrivalTime = [
+    'Rubavu: 3hrs',
+    'Musanze: 3hrs',
+    'Nyanza : 2hrs',
+    'Karongi 4hrs',
+    'Kamonyi: 30min',
+    'Rusizi: 5hrs',
+    'Ngororero: 2h30min',
+    'Nyabihu: 1h25min',
+    'Kayonza: 2hrs'
+  ];
+  String checkArrivalTime = 'Rubavu: 3hrs';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,11 +106,12 @@ class _DetailsPageState extends State<DetailsPage> {
         children: [
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 50,
-            padding: EdgeInsets.all(13),
+            height: 65,
+            padding: EdgeInsets.all(21),
             decoration: BoxDecoration(
               color: Color.fromARGB(255, 255, 255, 255),
-              border: Border(bottom: BorderSide(width: 1, color: Color(0xFFE6E6E6))),
+              border: Border(
+                  bottom: BorderSide(width: 1, color: Color(0xFFE6E6E6))),
             ),
             child: Text(
               'Buy a Ticket',
@@ -89,11 +159,7 @@ class _DetailsPageState extends State<DetailsPage> {
                         Divider(
                           color: Color.fromRGBO(255, 77, 1, 0.53),
                         ),
-                        Text(
-                          'Kigali',
-                          style: TextStyle(
-                              fontSize: 16.0, fontFamily: 'Source Sans 3'),
-                        )
+                        Text('Kigali City')
                       ],
                     ),
                   ),
@@ -107,7 +173,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   SizedBox(width: 5),
                   Container(
-                    width: 150.0,
+                    width: 180.0,
                     height: 115.0,
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -120,16 +186,22 @@ class _DetailsPageState extends State<DetailsPage> {
                         Text(
                           'To',
                           style: TextStyle(
-                              fontSize: 16.0, fontFamily: 'Source Sans 3'),
+                              fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 10.0),
-                        Text(
-                          'Add Destination',
-                          style: TextStyle(
-                              fontSize: 13.0,
-                              fontFamily: 'Source Sans 3',
-                              color: Colors.grey),
-                        ),
+                        DropdownButton<String>(
+                            value: selectedLocation,
+                            items: locations.map((String item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
+                            onChanged: (String? new_value) {
+                              setState(() {
+                                selectedLocation = new_value!;
+                              });
+                            }),
                         Divider(
                           color: Color.fromRGBO(255, 77, 1, 0.53),
                         ),
@@ -150,7 +222,7 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                   Container(
                     width: 150.0,
-                    height: 63.0,
+                    height: 140.0,
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Color.fromRGBO(255, 77, 1, 0.53), width: 1.0),
@@ -162,19 +234,28 @@ class _DetailsPageState extends State<DetailsPage> {
                         Text(
                           'Departure Time',
                           style: TextStyle(
-                              fontSize: 16.0, fontFamily: 'Source Sans 3'),
+                              fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          '__:__',
-                          style: TextStyle(fontSize: 20),
-                        ),
+                        DropdownButton<String>(
+                            value: selectedTime,
+                            items: departTime.map((String item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
+                            onChanged: (String? New_Time) {
+                              setState(() {
+                                selectedTime = New_Time!;
+                              });
+                            }),
                       ],
                     ),
                   ),
                   SizedBox(width: 25),
                   Container(
-                    width: 150.0,
-                    height: 63.0,
+                    width: 180.0,
+                    height: 140.0,
                     decoration: BoxDecoration(
                       border: Border.all(
                           color: Color.fromRGBO(255, 77, 1, 0.53), width: 1.0),
@@ -184,15 +265,24 @@ class _DetailsPageState extends State<DetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Arrival Time',
+                          'Check your Arrival Time',
                           style: TextStyle(
-                              fontSize: 16.0, fontFamily: 'Source Sans 3'),
+                              fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          '__:__',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ],
+                         DropdownButton<String>(
+                            value: checkArrivalTime,
+                            items: ArrivalTime.map((String item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
+                            onChanged: (String? New_check) {
+                              setState(() {
+                                checkArrivalTime = New_check!;
+                              });
+                            }),                   
+                        ],
                     ),
                   ),
                 ],
@@ -202,11 +292,12 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(height: 20),
 
               Container(
-                width: 330,
+                margin: EdgeInsets.only(right: 15),
+                width: 355,
                 height: 61,
                 decoration: BoxDecoration(
-                  border:
-                      Border.all(color: Color.fromRGBO(255, 77, 1, 0.53), width: 1.0),
+                  border: Border.all(
+                      color: Color.fromRGBO(255, 77, 1, 0.53), width: 1.0),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Padding(
@@ -220,33 +311,41 @@ class _DetailsPageState extends State<DetailsPage> {
                   ),
                 ),
               ),
-
+              SizedBox(height: 20),
+              Text(
+                'Choose Agency',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
               SizedBox(height: 20),
 
               Container(
-                width: 330.0,
-                height: 25.0,
+                margin: EdgeInsets.only(right: 15),
+                width: 355.0,
+                height: 35.0,
                 decoration: BoxDecoration(
-                  border:
-                      Border.all(color: Color.fromRGBO(255, 77, 1, 0.53), width: 1.0),
+                  border: Border.all(
+                      color: Color.fromRGBO(255, 77, 1, 0.53), width: 1.0),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      'Choose Buy Agency you want',
-                      style: TextStyle(
-                          fontSize: 14.0, fontFamily: 'Source Sans 3'),
-                    ),
                     SizedBox(
                       width: 20,
                     ),
-                    Icon(
-                      FontAwesomeIcons.caretDown,
-                      color: Colors.grey,
-                      size: 15.0,
-                    )
+                    DropdownButton<String>(
+                        value: ChosenAgencies,
+                        items: Agencies.map((String item) {
+                          return DropdownMenuItem<String>(
+                            value: item,
+                            child: Text(item),
+                          );
+                        }).toList(),
+                        onChanged: (String? New_Agency) {
+                          setState(() {
+                            ChosenAgencies = New_Agency!;
+                          });
+                        }),
                   ],
                 ),
               ),
@@ -254,9 +353,10 @@ class _DetailsPageState extends State<DetailsPage> {
               SizedBox(height: 20),
 
               SizedBox(
-                width: 330,
-                height: 25,
+                width: 355,
+                height: 28,
                 child: ElevatedButton(
+                  
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => buyticket()));

@@ -1,9 +1,11 @@
 import 'details.dart';
+import 'buyTicket.dart';
 import 'main.dart';
 import 'Signup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class SignInPage extends StatefulWidget {
   @override
@@ -48,11 +50,11 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 Expanded(
                   child: Center(
-                    child: Text(
-                      "SIGN IN",
-                      style: TextStyle(fontSize: 32, fontFamily: 'Bungee'),
-                    ),
-                  ),
+                      // child: Text(
+                      //   "SIGN IN",
+                      //   style: TextStyle(fontSize: 32, fontFamily: 'Bungee'),
+                      // ),
+                      ),
                 ),
               ],
             ),
@@ -70,9 +72,11 @@ class _SignInPageState extends State<SignInPage> {
                 } else if (snapshot.hasData) {
                   Future.delayed(Duration(seconds: 2), () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => MyHomePage()));
+                        MaterialPageRoute(builder: (context) => DetailsPage()));
                   });
-                  return Center(child: Text('Successfully logged in!'));
+                  return Center(
+                      child:
+                          SpinKitThreeBounce(color: Color.fromRGBO(255, 77, 1, 0.53), size: 50.0));
                 } else {
                   return Padding(
                     padding: EdgeInsets.symmetric(horizontal: 24),
@@ -178,37 +182,36 @@ class _SignInPageState extends State<SignInPage> {
                 }
               },
             ),
-
-            Center(
-                child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Don't have an account yet?",
-                  style: TextStyle(fontSize: 14, fontFamily: 'DM Sans'),
-                ),
-                SizedBox(width: 8),
-                GestureDetector(
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Text(
-                      "Sign Up",
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontFamily: 'DM Sans',
-                        color: Color(0xff305489),
-                      ),
-                    ),
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignOutPage()),
-                    );
-                  },
-                ),
-              ],
-            )),
+            // Center(
+            //     child: Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     Text(
+            //       "Don't have an account yet?",
+            //       style: TextStyle(fontSize: 14, fontFamily: 'DM Sans'),
+            //     ),
+            //     SizedBox(width: 8),
+            //     GestureDetector(
+            //       child: MouseRegion(
+            //         cursor: SystemMouseCursors.click,
+            //         child: Text(
+            //           "Sign Up",
+            //           style: TextStyle(
+            //             fontSize: 14,
+            //             fontFamily: 'DM Sans',
+            //             color: Color(0xff305489),
+            //           ),
+            //         ),
+            //       ),
+            //       onTap: () {
+            //         Navigator.push(
+            //           context,
+            //           MaterialPageRoute(builder: (context) => SignOutPage()),
+            //         );
+            //       },
+            //     ),
+            //   ],
+            // )),
             Expanded(child: SizedBox(height: 10)),
           ],
         ),
@@ -224,14 +227,14 @@ class _SignInPageState extends State<SignInPage> {
     );
 
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: emailContoller.text.trim(),
-          password: passwordContoller.text.trim()).then((value) => 
-            Future.delayed(Duration(seconds: 1), () {
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (context) => DetailsPage()));
-                    })
-          );
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+              email: emailContoller.text.trim(),
+              password: passwordContoller.text.trim())
+          .then((value) => Future.delayed(Duration(seconds: 1), () {
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => DetailsPage()));
+              }));
     } on FirebaseAuthException catch (e) {
       Center(child: Text("Signin Failed, Please Try again"));
     }

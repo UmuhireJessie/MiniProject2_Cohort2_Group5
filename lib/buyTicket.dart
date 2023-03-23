@@ -46,7 +46,7 @@ class _buyticketState extends State<buyticket> {
                 width: 30.0,
               ),
               Text(
-                "Buy a ticket",
+                "Payment",
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
