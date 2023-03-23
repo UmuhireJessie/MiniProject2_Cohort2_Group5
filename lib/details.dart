@@ -354,7 +354,7 @@ class _DetailsPageState extends State<DetailsPage> {
 
               SizedBox(
                 width: 355,
-                height: 28,
+                height: 25,
                 child: ElevatedButton(
                   
                   onPressed: () {

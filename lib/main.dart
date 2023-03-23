@@ -10,8 +10,6 @@ import 'Signin.dart';
 import 'Signup.dart';
 import 'Splash.dart';
 
-
-
 // void main() => runApp(MyApp());
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,10 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
     });
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => _pages[_selectedIndex]),
-    );
+    if (SignInPage == true) {
+      Center(child: Text("First Sign in"));
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => _pages[_selectedIndex]),
+      );
+    } else {
+      Center(child: Text("you didn't sign up"));
+    }
   }
 
   @override
@@ -226,7 +229,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     ))
                   ]),
                 ),
-
               ]),
               SizedBox(height: 60),
               Column(
