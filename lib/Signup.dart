@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:miniproject/details.dart';
 
 import 'main.dart';
 import 'package:flutter/material.dart';
@@ -255,7 +256,12 @@ class _SignOutPageState extends State<SignOutPage> {
                         margin: EdgeInsets.symmetric(horizontal: 24),
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: signUp,
+                        onPressed: () {
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DetailsPage()),
+                         );
+                        },
                           child: Text(
                             'Sign Up',
                             style: TextStyle(
