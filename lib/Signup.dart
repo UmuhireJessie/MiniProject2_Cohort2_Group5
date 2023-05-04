@@ -256,12 +256,7 @@ class _SignOutPageState extends State<SignOutPage> {
                         margin: EdgeInsets.symmetric(horizontal: 24),
                         width: double.infinity,
                         child: ElevatedButton(
-                        onPressed: () {
-                        Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => DetailsPage()),
-                         );
-                        },
+                         onPressed: signUp,                  
                           child: Text(
                             'Sign Up',
                             style: TextStyle(
