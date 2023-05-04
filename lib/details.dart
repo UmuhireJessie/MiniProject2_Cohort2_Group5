@@ -4,6 +4,8 @@ import 'buyticket.dart';
 import 'main.dart';
 import 'alltickets.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DetailsPage extends StatefulWidget {
   @override
   State<DetailsPage> createState() => _DetailsPageState();
@@ -85,7 +87,7 @@ class _DetailsPageState extends State<DetailsPage> {
   ];
   String ChosenAgencies = 'VIRUNGA';
 
-   List<String> ArrivalTime = [
+  List<String> ArrivalTime = [
     'Rubavu: 3hrs',
     'Musanze: 3hrs',
     'Nyanza : 2hrs',
@@ -97,6 +99,33 @@ class _DetailsPageState extends State<DetailsPage> {
     'Kayonza: 2hrs'
   ];
   String checkArrivalTime = 'Rubavu: 3hrs';
+
+  void _saveDetails() async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'locations': selectedLocation,
+      'departTime': selectedTime,
+      'Agencies': ChosenAgencies,
+      'ArrivalTime': checkArrivalTime,
+    });
+  }
+
+  //  Future UserDetails(String locations, String departTime, String Agencies, String ArrivalTime) async {
+  //   await FirebaseFirestore.instance.collection('users').add({
+  //     'locations': locations,
+  //     'departTime': departTime,
+  //     'Agencies' : Agencies,
+  //     'ArrivalTime': ArrivalTime,
+  //   });
+  // }
+  Future UserDetails(
+      String locations, String departTime, String Agencies, String arrivalTime) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'location': locations,
+      'time': departTime,
+      'agency': Agencies,
+      'arrivalTime': arrivalTime,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -185,8 +214,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       children: [
                         Text(
                           'To',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 10.0),
                         DropdownButton<String>(
@@ -233,8 +261,7 @@ class _DetailsPageState extends State<DetailsPage> {
                       children: [
                         Text(
                           'Departure Time',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         DropdownButton<String>(
                             value: selectedTime,
@@ -266,10 +293,9 @@ class _DetailsPageState extends State<DetailsPage> {
                       children: [
                         Text(
                           'Check your Arrival Time',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold),
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                         DropdownButton<String>(
+                        DropdownButton<String>(
                             value: checkArrivalTime,
                             items: ArrivalTime.map((String item) {
                               return DropdownMenuItem<String>(
@@ -281,8 +307,8 @@ class _DetailsPageState extends State<DetailsPage> {
                               setState(() {
                                 checkArrivalTime = New_check!;
                               });
-                            }),                   
-                        ],
+                            }),
+                      ],
                     ),
                   ),
                 ],
@@ -356,8 +382,9 @@ class _DetailsPageState extends State<DetailsPage> {
                 width: 355,
                 height: 25,
                 child: ElevatedButton(
-                  
                   onPressed: () {
+                    UserDetails(selectedLocation, selectedTime, ChosenAgencies,
+                        checkArrivalTime);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => buyticket()));
                   },

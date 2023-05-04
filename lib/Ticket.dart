@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'allTickets.dart';
+import 'D_ticket.dart';
 import 'passengerAlarmClock.dart';
+import 'DetailsPage_DB.dart';
 
 class TicketPage extends StatefulWidget {
   @override
@@ -220,7 +222,10 @@ class _TicketPageState extends State<TicketPage> {
                 },
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => paperTick()));
+                },
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Text(
