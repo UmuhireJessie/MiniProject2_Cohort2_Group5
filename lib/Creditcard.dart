@@ -109,13 +109,12 @@ class _CreditCardPageState extends State<CreditCardPage> {
                             ),
                           ),
                           SizedBox(height: 23),
-
                           Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 Container(
-                                    height: 400,
+                                    height: 300,
                                     width: 300,
                                     // color: Colors.blue,
                                     child: CreditCardForm(
@@ -194,7 +193,7 @@ class _CreditCardPageState extends State<CreditCardPage> {
                           //   ],
                           // ),
 
-                          SizedBox(height: 33),
+                          // SizedBox(height: 10),
                           Container(
                             width: MediaQuery.of(context).size.width,
                             child: SizedBox(

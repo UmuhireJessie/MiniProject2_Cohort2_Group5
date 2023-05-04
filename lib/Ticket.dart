@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'allTickets.dart';
+import 'passengerAlarmClock.dart';
 
 class TicketPage extends StatefulWidget {
   @override
@@ -14,7 +15,7 @@ class _TicketPageState extends State<TicketPage> {
   int _selectedIndex = 1;
 
   List<Widget> _pages = [
-   MyHomePage(),
+    MyHomePage(),
     DetailsPage(),
     Mytickets(),
   ];
@@ -45,9 +46,7 @@ class _TicketPageState extends State<TicketPage> {
               ),
             ]),
           ),
-
           SizedBox(height: 16),
-
           Center(
             child: Container(
               width: 304,
@@ -201,46 +200,54 @@ class _TicketPageState extends State<TicketPage> {
               ]),
             ),
           ),
-
-          SizedBox(height: 34),
-
-          Padding(
-              padding: EdgeInsets.only(right: 18),
-              child: Align(
-                  alignment: Alignment.centerRight,
-                  child: Container(
-                    height: 32,
-                    width: 146,
-                    child: ElevatedButton(
-                      onPressed: () {},
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'Download',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: 'DM Sans Med',
-                                  color: Color(0xff000000)),
-                            ),
-                            SizedBox(width: 10),
-                            Icon(FontAwesomeIcons.download,
-                                size: 15, color: Color(0xff000000))
-                          ]),
-                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(
-                          Color.fromRGBO(255, 77, 1, 0.53),
-                        ),
-                        elevation: MaterialStateProperty.all<double>(0),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.88),
-                          ),
-                        ),
-                      ),
-                    ),
-                  )))
+          SizedBox(height: 10),
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text('OPTION',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
+            SizedBox(width: 10),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+              TextButton(
+                child: const Text(
+                  'Set Alarm',
+                  style: TextStyle(
+                      fontSize: 20.0, color: Color.fromRGBO(255, 77, 1, 0.53)),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PassengerAlarm()));
+                },
+              ),
+              TextButton(
+                onPressed: () {},
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    'Download',
+                    style: TextStyle(
+                        fontSize: 20.0,
+                        color: Color.fromRGBO(255, 77, 1, 0.53)),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(FontAwesomeIcons.download,
+                      size: 20.0, color: Color(0xff000000)),
+                ]),
+                // style: ButtonStyle(
+                //   backgroundColor: MaterialStateProperty.all<Color>(
+                //     Color.fromRGBO(255, 77, 1, 0.53),
+                //   ),
+                //   // elevation: MaterialStateProperty.all<double>(0),
+                //   // shape: MaterialStateProperty.all<
+                //   //     RoundedRectangleBorder>(
+                //   //   RoundedRectangleBorder(
+                //   //     borderRadius: BorderRadius.circular(30.88),
+                //   //   ),
+                //   // ),
+                // ),
+              ),
+            ])
+          ]),
         ]),
       ),
       bottomNavigationBar: BottomNavigationBar(

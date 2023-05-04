@@ -250,9 +250,7 @@ class _SignOutPageState extends State<SignOutPage> {
                           ],
                         ),
                       ),
-
                       SizedBox(height: 10),
-
                       Container(
                         margin: EdgeInsets.symmetric(horizontal: 24),
                         width: double.infinity,
